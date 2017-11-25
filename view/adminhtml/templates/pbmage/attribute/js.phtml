@@ -1,0 +1,166 @@
+<?php
+
+?>
+<script>
+require(["jquery","prototype"], function(jQuery) {
+function getFrontTab() {
+if ($('attribute_tabs_main')) {
+return $('attribute_tabs_main').up('li');
+} else {
+return $('front_fieldset-wrapper');
+}
+}
+
+function checkOptionsPanelVisibility() {
+if($('manage-options-panel')) {
+var panel = $('manage-options-panel').up('.fieldset');
+var fi_value = $('frontend_input').value;
+if($('frontend_input') && (fi_value=='select' || fi_value=='multiselect')) {
+panel.show();
+} else {
+panel.hide();
+}
+}
+}
+
+function showDefaultRows()
+{
+setRowVisibility('is_required', true);
+setRowVisibility('frontend_class', true);
+}
+
+function setRowVisibility(id, isVisible)
+{
+if ($(id)) {
+var td = $(id).parentNode;
+var tr = $(td.parentNode);
+
+if (isVisible) {
+tr.show();
+} else {
+tr.blur();
+tr.hide();
+}
+}
+}
+
+function switchDefaultValueField()
+{
+if (!$('frontend_input')) {
+return;
+}
+
+var currentValue = $('frontend_input').value;
+var defaultValueTextVisibility = false;
+var defaultValueTextareaVisibility = false;
+var defaultValueDateVisibility = false;
+var defaultValueYesnoVisibility = false;
+
+switch (currentValue) {
+case 'select':
+optionDefaultInputType = 'radio';
+break;
+case 'multiselect':
+optionDefaultInputType = 'checkbox';
+break;
+case 'date':
+defaultValueDateVisibility = true;
+break;
+case 'boolean':
+defaultValueYesnoVisibility = true;
+break;
+case 'textarea':
+defaultValueTextareaVisibility = true;
+break;
+default:
+defaultValueTextVisibility = true;
+break;
+}
+
+showDefaultRows();
+setRowVisibility('default_value_text', defaultValueTextVisibility);
+setRowVisibility('default_value_textarea', defaultValueTextareaVisibility);
+setRowVisibility('default_value_date', defaultValueDateVisibility);
+setRowVisibility('default_value_yesno', defaultValueYesnoVisibility);
+
+var elems = document.getElementsByName('default[]');
+for (var i = 0; i < elems.length; i++) {
+elems[i].type = optionDefaultInputType;
+}
+}
+
+function bindAttributeInputType() {
+checkOptionsPanelVisibility();
+switchDefaultValueField();
+
+switch ($('frontend_input').value) {
+case 'textarea':
+$('frontend_class').value = '';
+$('frontend_class').disabled = true;
+break;
+case 'text':
+if (!$('frontend_class').getAttribute('readonly')) {
+$('frontend_class').disabled = false;
+}
+break;
+case 'select':
+case 'multiselect':
+$('frontend_class').value = '';
+$('frontend_class').disabled = true;
+break;
+default:
+$('frontend_class').value = '';
+$('frontend_class').disabled = true;
+}
+
+if($('is_filterable_in_grid')) {
+if($('frontend_input').value == 'textarea' || $('frontend_input').value == 'multiselect') {
+$('is_filterable_in_grid').disabled = true;
+} else {
+if (!$('is_filterable_in_grid').getAttribute('readonly')) {
+$('is_filterable_in_grid').disabled = false;
+}
+}
+}}
+
+function updateRequriedOptions()
+{
+if ($F('frontend_input')=='select' && $F('is_required')==1) {
+$('option-count-check').addClassName('required-options-count');
+} else {
+$('option-count-check').removeClassName('required-options-count');
+}
+}
+
+function switchDefaultValueFieldCustom()
+{
+setTimeout("switchDefaultValueField();", 100);
+}
+
+if($('frontend_input')) {
+Event.observe($('frontend_input'), 'change', updateRequriedOptions);
+Event.observe($('frontend_input'), 'change', bindAttributeInputType);
+}
+
+if ($('is_required')) {
+Event.observe($('is_required'), 'change', updateRequriedOptions);
+}
+
+if ($('add_new_option_button')) {
+Event.observe('add_new_option_button', 'click', switchDefaultValueFieldCustom);
+}
+
+jQuery(document).ready(function() {
+bindAttributeInputType();
+setTimeout("jQuery('#manage-options-panel').triggerHandler('render');", 3000);
+});
+
+window.updateRequriedOptions = updateRequriedOptions;
+window.setRowVisibility = setRowVisibility;
+window.showDefaultRows = showDefaultRows;
+window.switchDefaultValueField = switchDefaultValueField;
+window.bindAttributeInputType = bindAttributeInputType;
+window.checkOptionsPanelVisibility = checkOptionsPanelVisibility;
+window.getFrontTab = getFrontTab;
+});
+</script>

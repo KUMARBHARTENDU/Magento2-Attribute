@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<body>
+<referenceContainer name="left">
+<block class="Bhartendukumar\Attribute\Block\Adminhtml\Customer\Attribute\Edit\Tabs" name="attribute_edit_tabs">
+<container label="Main" name="main">
+<block class="Bhartendukumar\Attribute\Block\Adminhtml\Customer\Attribute\Edit\Tab\Main" as="base"/>
+<block class="Magento\Eav\Block\Adminhtml\Attribute\Edit\Options\Options" as="advanced"/>
+<block class="Bhartendukumar\Attribute\Block\Adminhtml\Customer\Attribute\Edit\Tab\Advanced" as="options"/>
+</container>
+<block class="Bhartendukumar\Attribute\Block\Adminhtml\Customer\Attribute\Edit\Tab\Front" as="front"/>
+</block>
+</referenceContainer>
+<referenceContainer name="content">
+<block class="Bhartendukumar\Attribute\Block\Adminhtml\Customer\Attribute\Edit" name="attribute_edit_content"/>
+</referenceContainer>
+<referenceContainer name="js">
+<block class="Magento\Backend\Block\Template" name="attribute_edit_js" template="Bhartendukumar_Attribute::bhartendukumar/attribute/js.phtml"/>
+</referenceContainer>
+</body>
+</page>

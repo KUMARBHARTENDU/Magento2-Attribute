@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+<menu>
+<add id="Bhartendukumar_Attribute::bhartendukumar" title="BHARTENDUKUMAR" module="Bhartendukumar_Attribute" sortOrder="99" resource="Bhartendukumar_Attribute::bhartendukumar"/>
+<add id="Bhartendukumar_Attribute::attribute_manager" title="Attribute Manager" module="Bhartendukumar_Attribute" sortOrder="1" parent="Bhartendukumar_Attribute::bhartendukumar" resource="Bhartendukumar_Attribute::attribute_manager"/>
+<add id="Bhartendukumar_Attribute::category_attribute" title="Category" module="Bhartendukumar_Attribute" sortOrder="1" parent="Bhartendukumar_Attribute::attribute_manager" action="bhartendukumar_attribute_manager/category/" resource="Bhartendukumar_Attribute::category_attribute"/>
+<add id="Bhartendukumar_Attribute::customer_attribute" title="Customer" module="Bhartendukumar_Attribute" sortOrder="2" parent="Bhartendukumar_Attribute::attribute_manager" action="bhartendukumar_attribute_manager/customer/" resource="Bhartendukumar_Attribute::customer_attribute"/>
+<add id="Bhartendukumar_Attribute::customer_address_attribute" title="Customer Address" module="Bhartendukumar_Attribute" sortOrder="3" parent="Bhartendukumar_Attribute::attribute_manager" action="bhartendukumar_attribute_manager/customer_address/" resource="Bhartendukumar_Attribute::customer_address_attribute"/>
+</menu>
+</config>

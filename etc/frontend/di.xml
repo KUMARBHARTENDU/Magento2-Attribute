@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd"><type name="Magento\Customer\Model\AccountManagement">
+<plugin name="customAccountManagement" type="Bhartendukumar\Attribute\Model\Plugin\AccountManagement"/>
+</type>
+<type name="Magento\Eav\Model\Validator\Attribute\Data">
+<plugin name="customValidatorAttributeData" type="Bhartendukumar\Attribute\Model\Plugin\Validator\Attribute\Data"/>
+</type>
+<type name="Magento\Customer\Model\Metadata\Form">
+<plugin name="customCustomerMetadataForm" type="Bhartendukumar\Attribute\Model\Plugin\Metadata\Form"/>
+</type>
+</config>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd"><type name="Magento\Ui\DataProvider\EavValidationRules">
+<plugin name="customEavValidationRules" type="Bhartendukumar\Attribute\Model\Plugin\EavValidationRules"/>
+</type>
+<type name="Magento\Eav\Model\Entity\Type">
+<plugin name="customEavAttributeCollection" type="Bhartendukumar\Attribute\Model\Plugin\EavAttributeCollection"/>
+</type>
+<type name="Magento\Customer\Ui\Component\ColumnFactory">
+<plugin name="customGridColumnValidation" type="Bhartendukumar\Attribute\Model\Plugin\GridColumnValidation"/>
+</type>
+<type name="Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend">
+<plugin name="customValidateAttribute" type="Bhartendukumar\Attribute\Model\Plugin\AbstractBackend"/>
+</type>
+</config>

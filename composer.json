@@ -1,0 +1,14 @@
+{
+    "name": "bhartendukumar/attribute",
+    "description": "Magento 2 module to add a new user define different types (category, customer, customer address) of attributes",
+    "type": "magento2-module",
+    "version": "0.0.1-alpha",
+    "autoload": {
+	"files": [
+	    "registration.php"
+	],
+	"psr-4": {
+	    "Bhartendukumar\\Attribute\\": ""
+	}
+}
+}

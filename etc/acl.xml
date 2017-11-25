@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+<acl>
+<resources>
+<resource id="Magento_Backend::admin">
+<resource id="Bhartendukumar_Attribute::bhartendukumar" title="Bhartendukumar" sortOrder="1">
+<resource id="Bhartendukumar_Attribute::attribute_manager" title="Attribute Manager" sortOrder="1">
+<resource id="Bhartendukumar_Attribute::category_attribute" title="Category" sortOrder="1"/>
+<resource id="Bhartendukumar_Attribute::customer_attribute" title="Customer" sortOrder="2"/>
+<resource id="Bhartendukumar_Attribute::customer_address_attribute" title="Customer Address" sortOrder="3"/>
+</resource>
+</resource>
+</resource>
+</resources>
+</acl>
+</config>

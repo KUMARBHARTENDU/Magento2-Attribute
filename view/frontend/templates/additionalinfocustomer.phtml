@@ -1,0 +1,124 @@
+<?php
+
+$count = count($block->getCollection());
+if ($count > 0) {
+$collection = $block->getCollection();
+$customer = $block->getCustomerData();
+?>
+</fieldset>
+<fieldset class="fieldset create account" data-hasrequired="<?php /* @noEscapeecho __('* Required Fields') ?>">
+<legend class="legend"><span><?php /* @noEscapeecho __('Additional Information') ?></span></legend><br/>
+<?php foreach ($collection as $attribute) {
+$required = 'false';
+$required_text = '';
+$attribute_value = '';
+$default_value = '';
+$frontend_class = '';
+$select_extra_name = '';
+$select_extra = '';
+
+$attribute_id = $attribute->getAttributeId();
+$frontend_input = $attribute->getFrontendInput();
+$attribute_code = $attribute->getAttributeCode();
+$frontend_label = $attribute->getFrontendLabel();
+$source_model = $attribute->getSourceModel();
+
+if ($customer === null) {
+$default_value = $attribute->getDefaultValue();
+if ($frontend_input == 'date' && $default_value != '') {
+$default_value = date("m/d/Y", strtotime($default_value));
+}
+}
+if ($attribute->getIsRequired()) {
+$required = 'true';
+$required_text = ' required';
+}
+if ($frontend_input == 'text') {
+$frontend_class = $attribute->getFrontendClass();
+}
+if ($customer !== null) {
+$attribute_value = $customer->getData($attribute_code);
+if ($attribute_value == '') {
+$attribute_value = $attribute->getDefaultValue();
+}
+
+if ($frontend_input == 'date' && $attribute_value != '') {
+$attribute_value = date("m/d/Y", strtotime($attribute_value));
+}
+} else {
+$attribute_value = $default_value;
+}
+
+if ($frontend_input == 'multiselect') {
+$select_extra_name = '[]';
+$select_extra = 'multiple="multiple" size="5"';
+}
+if ($attribute_value == 'NULL') {
+$attribute_value = '';
+}
+?>
+<?php if ($frontend_input == 'text' || $frontend_input == 'date') { ?>
+<div class="field <?php /* @noEscapeecho $attribute_code.$required_text; ?>">
+<label for="<?php /* @noEscapeecho $attribute_code; ?>" class="label">
+<span><?php /* @noEscapeecho $frontend_label; ?></span>
+</label>
+<div class="control">
+<input name="<?php /* @noEscapeecho $attribute_code; ?>"id="<?php /* @noEscapeecho $attribute_code; ?>"title="<?php /* @noEscapeecho $frontend_label; ?>"class="input-text <?php /* @noEscapeecho $frontend_class; ?>"data-validate="{required:<?php /* @noEscapeecho $required; ?>}"autocomplete="off"aria-required="<?php /* @noEscapeecho $required; ?>"type="text"value="<?php /* @noEscapeecho $attribute_value; ?>"data-attr="<?php /* @noEscapeecho $frontend_input; ?>">
+</div>
+</div>
+<?php } elseif ($frontend_input == 'textarea') { ?>
+<div class="field <?php /* @noEscapeecho $attribute_code.$required_text; ?>">
+<label for="<?php /* @noEscapeecho $attribute_code; ?>" class="label">
+<span><?php /* @noEscapeecho $frontend_label; ?></span>
+</label>
+<div class="control">
+<textarea name="<?php /* @noEscapeecho $attribute_code; ?>" id="<?php /* @noEscapeecho $attribute_code; ?>" title="<?php /* @noEscapeecho $frontend_label; ?>" data-validate="{required:<?php /* @noEscapeecho $required; ?>}" aria-required="<?php /* @noEscapeecho $required; ?>"><?php /* @noEscapeecho $attribute_value; ?></textarea>
+</div>
+</div>
+<?php } elseif ($frontend_input == 'select' || $frontend_input == 'multiselect') { ?>
+<div class="field <?php /* @noEscapeecho $attribute_code.$required_text; ?>">
+<label for="<?php /* @noEscapeecho $attribute_code; ?>" class="label">
+<span><?php /* @noEscapeecho $frontend_label; ?></span>
+</label>
+<div class="control">
+<select name="<?php /* @noEscapeecho $attribute_code.$select_extra_name; ?>"id="<?php /* @noEscapeecho $attribute_code; ?>"title="<?php /* @noEscapeecho $frontend_label; ?>"data-validate="{required:<?php /* @noEscapeecho $required; ?>}"aria-required="<?php /* @noEscapeecho $required; ?>"<?php /* @noEscapeecho $select_extra; ?>>
+<?php if ($frontend_input == 'select') { ?>
+<option value=""><?php /* @noEscapeecho __('-- Select --') ?></option>
+<?php } ?>
+<?php
+if ($source_model == 'Magento\Eav\Model\Entity\Attribute\Source\Boolean') {
+foreach ($block->getYesNo() as $key => $val) {
+$selected = '';
+if ($attribute_value == $val['value']) {
+$selected = 'selected="selected"';
+}
+/* @noEscapeecho '<option '.$selected.' value="'.$val['value'].'">
+'.$val['label'].'
+</option>';
+}
+} else {
+$options = $block->getSelectOptionValues($attribute_id);
+if ($options !== null) {
+foreach ($options as $_option) {
+$selected = '';
+if ($frontend_input == 'multiselect') {
+$all_selected = explode(",", $attribute_value);
+if (in_array($_option['id'], $all_selected)) {
+$selected = 'selected="selected"';
+}
+} elseif ($attribute_value == $_option['id']) {
+$selected = 'selected="selected"';
+}
+/* @noEscapeecho '<option '.$selected.' value="'.$_option['id'].'">
+'.$_option['store0'].
+'</option>';
+}
+}
+}
+?>
+</select>
+</div>
+</div><?php } ?>
+<?php } ?>
+</fieldset>
+<?php } ?>
